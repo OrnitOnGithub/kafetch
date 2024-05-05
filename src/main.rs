@@ -84,6 +84,15 @@ fn main() {
     }
   }
 
+  // get uptime with `uptime -p`
+  let mut uptime = std::process::Command::new("uptime");
+  uptime.arg("-p");
+  let mut uptime = String::from_utf8(uptime.output().expect("Failed to run `uptime .p`").stdout).expect("");
+  uptime.pop(); // remove the newline at the end
+  uptime.remove(0); uptime.remove(0); uptime.remove(0); // remove first three characters: "up "
+
+  
+
   // parse `lscpu` to get cpu count, name
 
   let mut cpu_info = std::process::Command::new("lscpu");
@@ -176,6 +185,7 @@ fn main() {
     info.push(format!("KERNEL     : {}", kernel_name));
     info.push(format!("HOSTNAME   : {}", hostname));
     info.push(format!("USER       : {}", user_name));
+    info.push(format!("UPTIME     : {}", uptime));
     info.push(format!("SHELL      : {}", shell_name));
     info.push(format!("PACK. MAN. : {}", package_manager));
     info.push(format!("HARDWARE   : {}", vendor_and_model));
