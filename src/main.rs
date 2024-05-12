@@ -176,7 +176,7 @@ fn main() {
     }
     if line.starts_with("MemAvailable") {
       let split_line = line.split(' ').collect::<Vec<_>>();
-      used_memory = total_memory - split_line[split_line.len()-2].parse::<i32>().unwrap() / 1024;
+      used_memory = total_memory - (split_line[split_line.len()-2].parse::<i32>().unwrap() / 1024);
     }
   }
 
@@ -193,7 +193,7 @@ fn main() {
   for gpu in vga_info {
     info.push(format!("GPU        : {}", gpu));
   }
-    info.push(format!("MEMORY     : {} / {} MB", used_memory, total_memory));
+    info.push(format!("MEMORY     : {} / {} MiB", used_memory, total_memory));
 
   for x in info {
     println!("{}", x);
@@ -210,5 +210,5 @@ fn index_first_character(text: String, query: char) -> usize {
     break
     }
   }
-  return index_of_occurence
+  index_of_occurence
 }
